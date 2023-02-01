@@ -14,46 +14,48 @@
     <span class="time-display">aa</span>
     <table>
       <tbody>
-        <tr>
+        <tr id="profitPercentage">
           <td class="upgrade">E E E E E</td>
-          <td class="gain">( +%)</td>
+          <td class="profit">( +%)</td>
           <td>
             <button class="invest"><img src="./increase.svg" alt="+" /></button>
           </td>
         </tr>
-        <tr>
+        <tr id="profit">
           <td class="upgrade">E E E E E</td>
-          <td class="gain">( +fix)</td>
+          <td class="profit">( +fix)</td>
           <td>
             <button class="invest"><img src="./increase.svg" alt="+" /></button>
           </td>
         </tr>
-        <tr>
+        <tr id="chanceToGetMoney">
           <td class="upgrade">E E E E E</td>
-          <td class="gain">( %chance)</td>
+          <td class="profit">( %chance)</td>
           <td>
             <button class="invest"><img src="./increase.svg" alt="+" /></button>
           </td>
         </tr>
-        <tr>
+        <tr id="amountToGet">
           <td class="upgrade">E E E E E</td>
-          <td class="gain">( chanceValue)</td>
+          <td class="profit">( chanceValue)</td>
           <td>
             <button class="invest"><img src="./increase.svg" alt="+" /></button>
           </td>
         </tr>
-        <tr>
+        <tr id="amountPercentage">
           <td class="upgrade">E E E E E</td>
-          <td class="gain">( %ofTotal)</td>
+          <td class="profit">( %ofTotal)</td>
           <td>
             <button class="invest"><img src="./increase.svg" alt="+" /></button>
           </td>
         </tr>
       </tbody>
     </table>
-    <main id="actual-amount">6400 $</main>
-    <footer id="coin-per-second">400<span>/sec</span></footer>
-    <div id="coin-per-second">
+    <main>
+      <p id="actual-amount">6400</p>
+      <p id="coin-per-second">400<span>/sec</span></p>
+    </main>
+    <div>
       <button>reset</button>
     </div>
   </body>

@@ -3,7 +3,6 @@ body {
   flex-direction: column;
   padding: 20px;
   max-width: 400px;
-  background-color: #aaaaaa0a;
 }
 body > h1 {
   display: inline-flex;
@@ -42,19 +41,28 @@ table > tbody > tr {
   height: 20px;
 }
 /*  */
-main {
-  padding-left: 30%;
-
-  text-align: center;
+#actual-amount {
+  margin-top: 2vh;
+  text-align: end;
   font-size: 3.6rem;
   font-weight: 600;
 }
-footer {
-  padding-left: 30%;
+#actual-amount::after {
+  font-size: 2rem;
+  font-weight: 300;
+  content: " $";
+}
+#coin-per-second {
   margin-top: 8px;
-  text-align: center;
+  text-align: end;
   font-size: 2.8rem;
 }
-footer::before {
+#coin-per-second::before {
+  font-size: 2rem;
   content: "$ ";
+}
+@media (min-width: 700px) {
+  body {
+    padding-left: 60px;
+  }
 }
