@@ -1,0 +1,60 @@
+body {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 400px;
+  background-color: #aaaaaa0a;
+}
+body > h1 {
+  display: inline-flex;
+  align-items: center;
+  font-size: 6em;
+  margin-bottom: 1vh;
+}
+body > h1 > img {
+  margin-right: 2em;
+  height: 2em;
+}
+/*  */
+.time-display {
+  text-align: end;
+  font-size: 4em;
+  margin-bottom: 4vh;
+}
+/*  */
+table {
+  font-size: 12em;
+}
+table > tbody > tr {
+  height: 2em;
+}
+.upgrade {
+}
+.gain {
+}
+.invest {
+  border: 0px transparent;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+}
+.invest img {
+  height: 20px;
+}
+/*  */
+main {
+  padding-left: 30%;
+
+  text-align: center;
+  font-size: 3.6rem;
+  font-weight: 600;
+}
+footer {
+  padding-left: 30%;
+  margin-top: 8px;
+  text-align: center;
+  font-size: 2.8rem;
+}
+footer::before {
+  content: "$ ";
+}
