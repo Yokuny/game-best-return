@@ -15,7 +15,7 @@ body > h1 > img {
   height: 2em;
 }
 /*  */
-.time-display {
+#time-display {
   text-align: end;
   font-size: 4em;
   margin-bottom: 4vh;
@@ -29,7 +29,10 @@ table > tbody > tr {
 }
 .upgrade {
 }
-.gain {
+.profit {
+}
+.profit > span {
+  font-size: 2em;
 }
 .invest {
   border: 0px transparent;
@@ -45,12 +48,12 @@ table > tbody > tr {
   margin-top: 2vh;
   text-align: end;
   font-size: 3.6rem;
-  font-weight: 600;
+  font-weight: 500;
 }
-#actual-amount::after {
+#actual-amount::before {
   font-size: 2rem;
   font-weight: 300;
-  content: " $";
+  content: "R$ ";
 }
 #coin-per-second {
   margin-top: 8px;
@@ -58,8 +61,13 @@ table > tbody > tr {
   font-size: 2.8rem;
 }
 #coin-per-second::before {
-  font-size: 2rem;
-  content: "$ ";
+  font-size: 1.6rem;
+  font-weight: 300;
+  content: "R$ ";
+}
+#coin-per-second::after {
+  font-size: 1.8rem;
+  content: " /second";
 }
 @media (min-width: 700px) {
   body {

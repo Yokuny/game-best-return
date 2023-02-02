@@ -11,49 +11,49 @@
   </head>
   <body>
     <h1><img src="./return.svg" alt="." /> best return</h1>
-    <span class="time-display">aa</span>
+    <span id="time-display">aa</span>
     <table>
       <tbody>
         <tr id="profitPercentage">
-          <td class="upgrade">E E E E E</td>
-          <td class="profit">( +%)</td>
+          <td class="upgrade"></td>
+          <td class="profit"><span>$</span></td>
           <td>
-            <button class="invest"><img src="./increase.svg" alt="+" /></button>
+            <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
         </tr>
         <tr id="profit">
-          <td class="upgrade">E E E E E</td>
-          <td class="profit">( +fix)</td>
+          <td class="upgrade"></td>
+          <td class="profit"></td>
           <td>
-            <button class="invest"><img src="./increase.svg" alt="+" /></button>
+            <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
         </tr>
         <tr id="chanceToGetMoney">
-          <td class="upgrade">E E E E E</td>
-          <td class="profit">( %chance)</td>
+          <td class="upgrade"></td>
+          <td class="profit"></td>
           <td>
-            <button class="invest"><img src="./increase.svg" alt="+" /></button>
+            <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
         </tr>
         <tr id="amountToGet">
-          <td class="upgrade">E E E E E</td>
-          <td class="profit">( chanceValue)</td>
+          <td class="upgrade"></td>
+          <td class="profit"></td>
           <td>
-            <button class="invest"><img src="./increase.svg" alt="+" /></button>
+            <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
         </tr>
         <tr id="amountPercentage">
-          <td class="upgrade">E E E E E</td>
-          <td class="profit">( %ofTotal)</td>
+          <td class="upgrade"></td>
+          <td class="profit"></td>
           <td>
-            <button class="invest"><img src="./increase.svg" alt="+" /></button>
+            <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
         </tr>
       </tbody>
     </table>
     <main>
-      <p id="actual-amount">6400</p>
-      <p id="coin-per-second">400<span>/sec</span></p>
+      <p id="actual-amount"></p>
+      <p id="coin-per-second"></p>
     </main>
     <div>
       <button>reset</button>
