@@ -83,10 +83,10 @@ video {
   padding: 0;
   border: 0;
   font-size: 62.5%;
-  vertical-align: baseline;
 }
 * {
   font-family: monospace;
+  /* border: 1px solid yellowgreen; */
 }
 article,
 aside,

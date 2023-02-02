@@ -1,42 +1,94 @@
 const timmer = document.getElementById("time-display");
 const actualAmountElement = document.getElementById("actual-amount");
 const moneyEarnings = document.getElementById("coin-per-second");
+
 const gameinfoControl = () => {
   let seconds = 0;
-  const getSeconds = () => {
-    ++seconds;
-    return seconds;
+  const getSeconds = () => ++seconds;
+  const value = 250;
+  const additionValue = 75;
+  let profitLvl = 0;
+  let profitPercentageLvl = 0;
+  let amountToGetLvl = 0;
+  let chanceToGetAmountLvl = 0;
+  let amountPercentageLvl = 0;
+  const improveProfit = () => {
+    ++profitLvl;
+    return profitLvl * 4.5;
+  };
+  const improveProfitPercentage = () => {
+    ++profitPercentageLvl;
+    return profitPercentageLvl * 4.5;
+  };
+  const improveAmountToGet = () => {
+    ++amountToGetLvl;
+    return amountToGetLvl * 4.5;
+  };
+  const improveChanceToGetAmount = () => {
+    ++chanceToGetAmountLvl;
+    return chanceToGetAmountLvl * 4.5;
+  };
+  const improveAmountPercentage = () => {
+    ++amountPercentageLvl;
+    return amountPercentageLvl * 4.5;
+  };
+  const actualPrice = (valueLvl) => {
+    console.log(value * valueLvl + additionValue * valueLvl);
+    return value * valueLvl + additionValue * valueLvl;
+  };
+  const checkPrice = (id) => {
+    switch (id) {
+      case "profitAmount":
+        return actualPrice(profitLvl);
+      case "profitPercentage":
+        return actualPrice(profitPercentageLvl);
+      case "amountToGet":
+        return actualPrice(amountToGetLvl);
+      case "chanceToGetMoney":
+        return actualPrice(chanceToGetAmountLvl);
+      case "amountPercentage":
+        return actualPrice(amountPercentageLvl);
+      default:
+        break;
+    }
   };
   return {
     getSeconds,
+    checkPrice,
+    improveProfit,
+    improveProfitPercentage,
+    improveAmountToGet,
+    improveChanceToGetAmount,
+    improveAmountPercentage,
+    checkPrice,
   };
 };
 const gameMoneyControl = () => {
   let amount = 500;
-  let profitPercentage = 0;
   let profit = 0;
+  let profitPercentage = 0;
   let chanceToGetMoney = 0;
   let amountToGet = 0;
   let amountPercentage = 0;
   const getProfit = () => {
-    profit += 50;
+    profit += 20;
     return profit;
   };
   const getProfitPercentage = () => {
-    profitPercentage += 5;
+    profitPercentage += 7.5;
     return profitPercentage;
   };
-  const getAmountPercentage = () => {
-    amountPercentage += 1;
-    return amountPercentage;
-  };
   const getChanceToGetMoney = () => {
-    chanceToGetMoney += 5;
+    chanceToGetMoney += 2.5;
     return chanceToGetMoney;
   };
   const getAmountToGet = () => {
-    amountToGet += 150;
+    amountToGet += 100;
     return amountToGet;
+  };
+  const getAmountPercentage = () => {
+    amountPercentage += 0.1;
+    return amountPercentage.toFixed(1);
   };
   const amountPerSecond = () => {
     let value, finalValue;
@@ -60,6 +112,7 @@ const gameMoneyControl = () => {
     amount = amountFinal + amountFinal * (amountPercentage / 100);
     return amount.toFixed(2);
   };
+  const payUpgrade = (value) => (amount -= value);
   return {
     getProfit,
     getProfitPercentage,
@@ -68,24 +121,28 @@ const gameMoneyControl = () => {
     getAmountToGet,
     amountPerSecond,
     getAmount,
+    payUpgrade,
   };
 };
 const state = gameMoneyControl();
 const values = gameinfoControl();
 
+const upgradeProgress = (bar, progress) => {
+  bar.style.width = `${progress}%`;
+};
 const fillingCell = (element, id) => {
   switch (id) {
     case "profitPercentage":
       if (element.className == "upgrade") {
-        element.textContent = "-----";
+        upgradeProgress(element.querySelector(".progress"), values.improveProfitPercentage());
       }
       if (element.className == "profit") {
         element.textContent = `${state.getProfitPercentage()} %`;
       }
       break;
-    case "profit":
+    case "profitAmount":
       if (element.className == "upgrade") {
-        element.textContent = "-----";
+        upgradeProgress(element.querySelector(".progress"), values.improveProfit());
       }
       if (element.className == "profit") {
         element.textContent = state.getProfit();
@@ -93,7 +150,7 @@ const fillingCell = (element, id) => {
       break;
     case "chanceToGetMoney":
       if (element.className == "upgrade") {
-        element.textContent = "-----";
+        upgradeProgress(element.querySelector(".progress"), values.improveChanceToGetAmount());
       }
       if (element.className == "profit") {
         element.textContent = `${state.getChanceToGetMoney()} %`;
@@ -101,7 +158,7 @@ const fillingCell = (element, id) => {
       break;
     case "amountToGet":
       if (element.className == "upgrade") {
-        element.textContent = "-----";
+        upgradeProgress(element.querySelector(".progress"), values.improveAmountToGet());
       }
       if (element.className == "profit") {
         element.textContent = state.getAmountToGet();
@@ -109,7 +166,7 @@ const fillingCell = (element, id) => {
       break;
     case "amountPercentage":
       if (element.className == "upgrade") {
-        element.textContent = "-----";
+        upgradeProgress(element.querySelector(".progress"), values.improveAmountPercentage());
       }
       if (element.className == "profit") {
         element.textContent = `${state.getAmountPercentage()} %`;
@@ -125,6 +182,10 @@ function actualAmountDisplay() {
   moneyEarnings.textContent = state.amountPerSecond();
   setTimeout(actualAmountDisplay, 1000);
 }
+const timeDisplay = () => {
+  timmer.textContent = values.getSeconds();
+  setTimeout(timeDisplay, 100);
+};
 const fillingTable = () => {
   const tableLine = document.querySelectorAll("tr");
   tableLine.forEach((element) => {
@@ -133,17 +194,16 @@ const fillingTable = () => {
   });
   actualAmountDisplay();
 };
-const timeDisplay = () => {
-  timmer.textContent = values.getSeconds();
-  setTimeout(timeDisplay, 100);
-};
 
 timeDisplay();
 fillingTable();
 //
 function increase(element) {
   const tableLine = element.parentNode.parentNode;
-  fillingCell(tableLine.querySelector(".upgrade"), tableLine.id);
-  fillingCell(tableLine.querySelector(".profit"), tableLine.id);
-  moneyEarnings.textContent = state.amountPerSecond();
+  if (state.getAmount() >= values.checkPrice(tableLine.id)) {
+    state.payUpgrade(values.checkPrice(tableLine.id));
+    fillingCell(tableLine.querySelector(".upgrade"), tableLine.id);
+    fillingCell(tableLine.querySelector(".profit"), tableLine.id);
+    moneyEarnings.textContent = state.amountPerSecond();
+  }
 }

@@ -27,17 +27,30 @@ table {
 table > tbody > tr {
   height: 2em;
 }
+/*  */
 .upgrade {
+  display: flex;
+  align-items: center;
+  height: 35px;
+  width: min(120px, 20vw);
 }
+.upgrade .progress {
+  height: 60%;
+  width: 0px;
+  border-radius: 0.4rem;
+  background: #ff4754;
+  transition: width 0.4s ease;
+}
+/*  */
 .profit {
-}
-.profit > span {
-  font-size: 2em;
+  width: 160px;
+  padding-left: 10px;
+  padding-bottom: 8px;
 }
 .invest {
   border: 0px transparent;
   cursor: pointer;
-  width: 100%;
+  width: min(120px, 20vw);
   border-radius: 4px;
 }
 .invest img {
