@@ -47,6 +47,16 @@ table > tbody > tr {
   padding-left: 10px;
   padding-bottom: 8px;
 }
+.upgradeCost {
+  margin-right: 5px;
+  font-size: 1.4rem;
+  display: inline-flex;
+}
+.upgradeCost::before {
+  content: "R$ ";
+  font-size: 1rem;
+  font-weight: 300;
+}
 .invest {
   border: 0px transparent;
   cursor: pointer;
@@ -81,6 +91,31 @@ table > tbody > tr {
 #coin-per-second::after {
   font-size: 1.8rem;
   content: " /second";
+}
+.switch {
+  width: 100%;
+  padding: 10px 8px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  border: 1px solid #0000007a;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#startGame input {
+  width: 60%;
+}
+.switchButton {
+  border: 0px transparent;
+  outline: 0px transparent;
+  border-bottom: 1px solid #0000007a;
+  padding: 4px;
+  letter-spacing: -0.5px;
+  cursor: pointer;
+}
+#endGame {
+  display: none;
 }
 @media (min-width: 700px) {
   body {

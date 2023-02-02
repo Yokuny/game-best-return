@@ -19,6 +19,7 @@
             <div class="progress"></div>
           </td>
           <td class="profit"></td>
+          <td class="upgradeCost"></td>
           <td>
             <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
@@ -28,6 +29,7 @@
             <div class="progress"></div>
           </td>
           <td class="profit"></td>
+          <td class="upgradeCost"></td>
           <td>
             <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
@@ -37,6 +39,7 @@
             <div class="progress"></div>
           </td>
           <td class="profit"></td>
+          <td class="upgradeCost"></td>
           <td>
             <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
@@ -46,6 +49,7 @@
             <div class="progress"></div>
           </td>
           <td class="profit"></td>
+          <td class="upgradeCost"></td>
           <td>
             <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
@@ -55,6 +59,7 @@
             <div class="progress"></div>
           </td>
           <td class="profit"></td>
+          <td class="upgradeCost"></td>
           <td>
             <button class="invest" onclick="increase(this)"><img src="./up.svg" alt="+" /></button>
           </td>
@@ -65,8 +70,14 @@
       <p id="actual-amount"></p>
       <p id="coin-per-second"></p>
     </main>
-    <div>
-      <button>reset</button>
+    <div class="switch">
+      <form id="startGame">
+        <input id="timeAmount" class="switchButton" type="number" placeholder="time in seconds" />
+        <button class="switchButton">Começar</button>
+      </form>
+      <form id="endGame">
+        <button class="switchButton">Reset</button>
+      </form>
     </div>
   </body>
   <script src="./main.js"></script>

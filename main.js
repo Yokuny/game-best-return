@@ -1,10 +1,22 @@
 const timmer = document.getElementById("time-display");
 const actualAmountElement = document.getElementById("actual-amount");
 const moneyEarnings = document.getElementById("coin-per-second");
-
+const startGame = document.getElementById("startGame");
+const endGame = document.getElementById("endGame");
 const gameinfoControl = () => {
-  let seconds = 0;
+  let seconds, timeAmount, timeKey, refreshKey;
   const getSeconds = () => ++seconds;
+  const setTime = (value) => (timeAmount = value * 10);
+  const decreaseSeconds = () => {
+    --timeAmount;
+    if (timeAmount <= 0) {
+      clearInterval(timeKey);
+      clearInterval(refreshKey);
+    }
+    return timeAmount;
+  };
+  const saveTimeKey = (key) => (timeKey = key);
+  const saveRefreshKey = (key) => (amountRefresh = key);
   const value = 250;
   const additionValue = 75;
   let profitLvl = 0;
@@ -32,10 +44,7 @@ const gameinfoControl = () => {
     ++amountPercentageLvl;
     return amountPercentageLvl * 4.5;
   };
-  const actualPrice = (valueLvl) => {
-    console.log(value * valueLvl + additionValue * valueLvl);
-    return value * valueLvl + additionValue * valueLvl;
-  };
+  const actualPrice = (valueLvl) => value * valueLvl + additionValue * valueLvl;
   const checkPrice = (id) => {
     switch (id) {
       case "profitAmount":
@@ -54,13 +63,16 @@ const gameinfoControl = () => {
   };
   return {
     getSeconds,
+    setTime,
+    decreaseSeconds,
+    saveTimeKey,
+    saveRefreshKey,
     checkPrice,
     improveProfit,
     improveProfitPercentage,
     improveAmountToGet,
     improveChanceToGetAmount,
     improveAmountPercentage,
-    checkPrice,
   };
 };
 const gameMoneyControl = () => {
@@ -79,11 +91,11 @@ const gameMoneyControl = () => {
     return profitPercentage;
   };
   const getChanceToGetMoney = () => {
-    chanceToGetMoney += 2.5;
+    chanceToGetMoney += 2;
     return chanceToGetMoney;
   };
   const getAmountToGet = () => {
-    amountToGet += 100;
+    amountToGet += 50;
     return amountToGet;
   };
   const getAmountPercentage = () => {
@@ -139,6 +151,9 @@ const fillingCell = (element, id) => {
       if (element.className == "profit") {
         element.textContent = `${state.getProfitPercentage()} %`;
       }
+      if (element.className == "upgradeCost") {
+        element.textContent = `${values.checkPrice(id)}`;
+      }
       break;
     case "profitAmount":
       if (element.className == "upgrade") {
@@ -146,6 +161,9 @@ const fillingCell = (element, id) => {
       }
       if (element.className == "profit") {
         element.textContent = state.getProfit();
+      }
+      if (element.className == "upgradeCost") {
+        element.textContent = `${values.checkPrice(id)}`;
       }
       break;
     case "chanceToGetMoney":
@@ -155,6 +173,9 @@ const fillingCell = (element, id) => {
       if (element.className == "profit") {
         element.textContent = `${state.getChanceToGetMoney()} %`;
       }
+      if (element.className == "upgradeCost") {
+        element.textContent = `${values.checkPrice(id)}`;
+      }
       break;
     case "amountToGet":
       if (element.className == "upgrade") {
@@ -163,6 +184,9 @@ const fillingCell = (element, id) => {
       if (element.className == "profit") {
         element.textContent = state.getAmountToGet();
       }
+      if (element.className == "upgradeCost") {
+        element.textContent = `${values.checkPrice(id)}`;
+      }
       break;
     case "amountPercentage":
       if (element.className == "upgrade") {
@@ -170,6 +194,9 @@ const fillingCell = (element, id) => {
       }
       if (element.className == "profit") {
         element.textContent = `${state.getAmountPercentage()} %`;
+      }
+      if (element.className == "upgradeCost") {
+        element.textContent = `${values.checkPrice(id)}`;
       }
       break;
     default:
@@ -180,30 +207,43 @@ const fillingCell = (element, id) => {
 function actualAmountDisplay() {
   actualAmountElement.textContent = state.getAmount();
   moneyEarnings.textContent = state.amountPerSecond();
-  setTimeout(actualAmountDisplay, 1000);
+  actualAmountElement.style.color = "#000";
 }
-const timeDisplay = () => {
-  timmer.textContent = values.getSeconds();
-  setTimeout(timeDisplay, 100);
+const timeDisplay = (value = false) => {
+  if (!value) {
+    timmer.textContent = values.getSeconds();
+  } else {
+    timmer.textContent = values.decreaseSeconds();
+    value = true;
+  }
 };
 const fillingTable = () => {
   const tableLine = document.querySelectorAll("tr");
   tableLine.forEach((element) => {
     fillingCell(element.querySelector(".upgrade"), element.id);
     fillingCell(element.querySelector(".profit"), element.id);
+    fillingCell(element.querySelector(".upgradeCost"), element.id);
   });
-  actualAmountDisplay();
+  values.saveRefreshKey = setInterval(actualAmountDisplay, 1000);
 };
-
-timeDisplay();
-fillingTable();
-//
+// funções externas
 function increase(element) {
   const tableLine = element.parentNode.parentNode;
   if (state.getAmount() >= values.checkPrice(tableLine.id)) {
     state.payUpgrade(values.checkPrice(tableLine.id));
     fillingCell(tableLine.querySelector(".upgrade"), tableLine.id);
     fillingCell(tableLine.querySelector(".profit"), tableLine.id);
+    fillingCell(tableLine.querySelector(".upgradeCost"), tableLine.id);
     moneyEarnings.textContent = state.amountPerSecond();
+    actualAmountElement.style.color = "#9acd32";
+  } else {
+    actualAmountElement.style.color = "#dc143c";
   }
 }
+startGame.addEventListener("submit", (e) => {
+  e.preventDefault();
+  values.setTime(document.getElementById("timeAmount").value);
+  values.saveTimeKey = setInterval(timeDisplay, 100, values.setTime());
+  timeDisplay(document.getElementById("timeAmount").value);
+  fillingTable();
+});
