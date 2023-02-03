@@ -117,6 +117,17 @@ table > tbody > tr {
 #endGame {
   display: none;
 }
+/*  */
+ul {
+  box-sizing: border-box;
+  padding-left: 17px;
+  margin-top: 2vh;
+}
+ul li {
+  margin-top: 1vh;
+  font-size: 2rem;
+  list-style-type: lower-greek;
+}
 @media (min-width: 700px) {
   body {
     padding-left: 60px;

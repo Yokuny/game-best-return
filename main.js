@@ -4,8 +4,15 @@ const moneyEarnings = document.getElementById("coin-per-second");
 const startGame = document.getElementById("startGame");
 const endGame = document.getElementById("endGame");
 const gameinfoControl = () => {
-  let seconds, timeAmount, timeKey, refreshKey;
+  let seconds = 0,
+    timeAmount = 0,
+    timeKey = 0,
+    refreshKey = 0;
   const getSeconds = () => ++seconds;
+  const breakTimeCount = () => {
+    clearInterval(timeKey);
+    clearInterval(refreshKey);
+  };
   const setTime = (value) => (timeAmount = value * 10);
   const decreaseSeconds = () => {
     --timeAmount;
@@ -16,14 +23,14 @@ const gameinfoControl = () => {
     return timeAmount;
   };
   const saveTimeKey = (key) => (timeKey = key);
-  const saveRefreshKey = (key) => (amountRefresh = key);
+  const saveRefreshKey = (key) => (refreshKey = key);
   const value = 250;
   const additionValue = 75;
-  let profitLvl = 0;
-  let profitPercentageLvl = 0;
-  let amountToGetLvl = 0;
-  let chanceToGetAmountLvl = 0;
-  let amountPercentageLvl = 0;
+  let profitLvl = 0,
+    profitPercentageLvl = 0,
+    amountToGetLvl = 0,
+    chanceToGetAmountLvl = 0,
+    amountPercentageLvl = 0;
   const improveProfit = () => {
     ++profitLvl;
     return profitLvl * 4.5;
@@ -67,6 +74,7 @@ const gameinfoControl = () => {
     decreaseSeconds,
     saveTimeKey,
     saveRefreshKey,
+    breakTimeCount,
     checkPrice,
     improveProfit,
     improveProfitPercentage,
@@ -76,7 +84,7 @@ const gameinfoControl = () => {
   };
 };
 const gameMoneyControl = () => {
-  let amount = 500;
+  let amount = 100;
   let profit = 0;
   let profitPercentage = 0;
   let chanceToGetMoney = 0;
@@ -122,7 +130,7 @@ const gameMoneyControl = () => {
     }
     amountFinal += profitResult;
     amount = amountFinal + amountFinal * (amountPercentage / 100);
-    return amount.toFixed(2);
+    return amount.toFixed(0);
   };
   const payUpgrade = (value) => (amount -= value);
   return {
@@ -209,14 +217,7 @@ function actualAmountDisplay() {
   moneyEarnings.textContent = state.amountPerSecond();
   actualAmountElement.style.color = "#000";
 }
-const timeDisplay = (value = false) => {
-  if (!value) {
-    timmer.textContent = values.getSeconds();
-  } else {
-    timmer.textContent = values.decreaseSeconds();
-    value = true;
-  }
-};
+
 const fillingTable = () => {
   const tableLine = document.querySelectorAll("tr");
   tableLine.forEach((element) => {
@@ -240,10 +241,26 @@ function increase(element) {
     actualAmountElement.style.color = "#dc143c";
   }
 }
+
+const timeDisplay = () => (timmer.textContent = values.decreaseSeconds());
+const noTimeDisplay = () => (timmer.textContent = values.getSeconds());
 startGame.addEventListener("submit", (e) => {
   e.preventDefault();
-  values.setTime(document.getElementById("timeAmount").value);
-  values.saveTimeKey = setInterval(timeDisplay, 100, values.setTime());
-  timeDisplay(document.getElementById("timeAmount").value);
+  if (document.getElementById("timeAmount").value > 0) {
+    values.setTime(document.getElementById("timeAmount").value);
+    values.saveTimeKey = setInterval(timeDisplay, 100);
+  } else {
+    values.saveTimeKey = setInterval(noTimeDisplay, 100);
+  }
   fillingTable();
+  startGame.style.display = "none";
+  endGame.style.display = "flex";
+});
+endGame.addEventListener("submit", (e) => {
+  e.preventDefault();
+  let answer = prompt(`Deseja reiniciar ?\ns ou n`);
+  if (answer == "s" || answer == "S" || answer == "sim" || answer == "Sim" || answer == "SIM") {
+    console.log(answer);
+    location.reload();
+  }
 });
