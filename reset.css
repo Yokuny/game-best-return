@@ -85,6 +85,7 @@ video {
   font-size: 62.5%;
 }
 * {
+  color: #000000;
   font-family: monospace;
 }
 article,
