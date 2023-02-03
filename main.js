@@ -5,20 +5,24 @@ const startGame = document.getElementById("startGame");
 const endGame = document.getElementById("endGame");
 const gameinfoControl = () => {
   let seconds = 0,
-    timeAmount = 0,
-    timeKey = 0,
-    refreshKey = 0;
-  const getSeconds = () => ++seconds;
-  const breakTimeCount = () => {
+    timeAmount = 0;
+  let timeKey, refreshKey;
+  function breakTimeCount() {
     clearInterval(timeKey);
     clearInterval(refreshKey);
-  };
+  }
   const setTime = (value) => (timeAmount = value * 10);
+  const getSeconds = () => {
+    ++seconds;
+    if (seconds >= 1000) {
+      breakTimeCount();
+    }
+    return seconds;
+  };
   const decreaseSeconds = () => {
     --timeAmount;
     if (timeAmount <= 0) {
-      clearInterval(timeKey);
-      clearInterval(refreshKey);
+      breakTimeCount();
     }
     return timeAmount;
   };
@@ -74,7 +78,6 @@ const gameinfoControl = () => {
     decreaseSeconds,
     saveTimeKey,
     saveRefreshKey,
-    breakTimeCount,
     checkPrice,
     improveProfit,
     improveProfitPercentage,
@@ -225,7 +228,7 @@ const fillingTable = () => {
     fillingCell(element.querySelector(".profit"), element.id);
     fillingCell(element.querySelector(".upgradeCost"), element.id);
   });
-  values.saveRefreshKey = setInterval(actualAmountDisplay, 1000);
+  values.saveRefreshKey(setInterval(actualAmountDisplay, 1000));
 };
 // funções externas
 function increase(element) {
@@ -248,9 +251,9 @@ startGame.addEventListener("submit", (e) => {
   e.preventDefault();
   if (document.getElementById("timeAmount").value > 0) {
     values.setTime(document.getElementById("timeAmount").value);
-    values.saveTimeKey = setInterval(timeDisplay, 100);
+    values.saveTimeKey(setInterval(timeDisplay, 100));
   } else {
-    values.saveTimeKey = setInterval(noTimeDisplay, 100);
+    values.saveTimeKey(setInterval(noTimeDisplay, 100));
   }
   fillingTable();
   startGame.style.display = "none";

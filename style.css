@@ -1,7 +1,7 @@
 body {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 26px;
   max-width: 400px;
 }
 body > h1 {
@@ -124,8 +124,9 @@ ul {
   margin-top: 2vh;
 }
 ul li {
-  margin-top: 1vh;
+  margin-top: 1.2vh;
   font-size: 2rem;
+  line-height: 18px;
   list-style-type: lower-greek;
 }
 @media (min-width: 700px) {
@@ -136,5 +137,8 @@ ul li {
     box-sizing: border-box;
     padding-left: 1vw;
     margin-top: 2vh;
+  }
+  ul li {
+    margin-top: 1vh;
   }
 }
