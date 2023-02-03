@@ -10,6 +10,7 @@ const gameinfoControl = () => {
   function breakTimeCount() {
     clearInterval(timeKey);
     clearInterval(refreshKey);
+    disableButtons(document.querySelectorAll("button.invest"));
   }
   const setTime = (value) => (timeAmount = value * 10);
   const getSeconds = () => {
@@ -106,20 +107,21 @@ const gameMoneyControl = () => {
   let chanceToGetMoney = 0;
   let amountToGet = 0;
   let amountPercentage = 0;
+  let gameFinalAmount = 0;
   const getProfit = () => {
-    profit += 20;
+    profit += 12.5;
     return profit;
   };
   const getProfitPercentage = () => {
-    profitPercentage += 7.5;
+    profitPercentage += 2;
     return profitPercentage;
   };
   const getChanceToGetMoney = () => {
-    chanceToGetMoney += 2;
+    chanceToGetMoney += 1.25;
     return chanceToGetMoney;
   };
   const getAmountToGet = () => {
-    amountToGet += 25;
+    amountToGet += 20;
     return amountToGet;
   };
   const getAmountPercentage = () => {
@@ -130,7 +132,6 @@ const gameMoneyControl = () => {
     let value, finalValue;
     finalValue = profit + profit * (profitPercentage / 100);
     value = getAmount() * (amountPercentage / 100);
-    finalValue += value;
     return finalValue.toFixed(0);
   };
   function chance(chance) {
@@ -148,7 +149,14 @@ const gameMoneyControl = () => {
     amount = amountFinal + amountFinal * (amountPercentage / 100);
     return amount.toFixed(0);
   };
-  const payUpgrade = (value) => (amount -= value);
+  const payUpgrade = (value) => {
+    gameFinalAmount += amount;
+    amount -= value;
+  };
+  const getFinalAmount = () => {
+    gameFinalAmount += amount;
+    return gameFinalAmount.toFixed(0);
+  };
   const reset = () => {
     amount = 100;
     profit = 0;
@@ -156,6 +164,7 @@ const gameMoneyControl = () => {
     chanceToGetMoney = 0;
     amountToGet = 0;
     amountPercentage = 0;
+    gameFinalAmount = 0;
   };
   return {
     getProfit,
@@ -166,6 +175,7 @@ const gameMoneyControl = () => {
     amountPerSecond,
     getAmount,
     payUpgrade,
+    getFinalAmount,
     reset,
   };
 };
@@ -252,6 +262,10 @@ const fillingTable = () => {
   });
   values.saveRefreshKey(setInterval(actualAmountDisplay, 1000));
 };
+const finalAmount = () => {
+  actualAmountElement.textContent = `${state.getFinalAmount()}`;
+  actualAmountElement.style.color = "#6495ed";
+};
 const enableButtons = (buttonsActivation) => {
   buttonsActivation.forEach((button) => {
     button.disabled = false;
@@ -261,6 +275,7 @@ const disableButtons = (buttonsActivation) => {
   buttonsActivation.forEach((button) => {
     button.disabled = true;
   });
+  finalAmount();
 };
 const switchToResetBtn = () => {
   startGame.style.display = "none";
