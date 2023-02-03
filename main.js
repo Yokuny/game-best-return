@@ -72,18 +72,31 @@ const gameinfoControl = () => {
         break;
     }
   };
+  const reset = () => {
+    breakTimeCount();
+    profitLvl = 0;
+    profitPercentageLvl = 0;
+    amountToGetLvl = 0;
+    chanceToGetAmountLvl = 0;
+    amountPercentageLvl = 0;
+    seconds = 0;
+    timeAmount = 0;
+    timeKey = 0;
+    refreshKey = 0;
+  };
   return {
     getSeconds,
     setTime,
     decreaseSeconds,
     saveTimeKey,
     saveRefreshKey,
-    checkPrice,
     improveProfit,
     improveProfitPercentage,
     improveAmountToGet,
     improveChanceToGetAmount,
     improveAmountPercentage,
+    checkPrice,
+    reset,
   };
 };
 const gameMoneyControl = () => {
@@ -106,7 +119,7 @@ const gameMoneyControl = () => {
     return chanceToGetMoney;
   };
   const getAmountToGet = () => {
-    amountToGet += 50;
+    amountToGet += 25;
     return amountToGet;
   };
   const getAmountPercentage = () => {
@@ -136,6 +149,14 @@ const gameMoneyControl = () => {
     return amount.toFixed(0);
   };
   const payUpgrade = (value) => (amount -= value);
+  const reset = () => {
+    amount = 100;
+    profit = 0;
+    profitPercentage = 0;
+    chanceToGetMoney = 0;
+    amountToGet = 0;
+    amountPercentage = 0;
+  };
   return {
     getProfit,
     getProfitPercentage,
@@ -145,6 +166,7 @@ const gameMoneyControl = () => {
     amountPerSecond,
     getAmount,
     payUpgrade,
+    reset,
   };
 };
 const state = gameMoneyControl();
@@ -220,9 +242,9 @@ function actualAmountDisplay() {
   moneyEarnings.textContent = state.amountPerSecond();
   actualAmountElement.style.color = "#000";
 }
-
 const fillingTable = () => {
   const tableLine = document.querySelectorAll("tr");
+  enableButtons(document.querySelectorAll("button.invest"));
   tableLine.forEach((element) => {
     fillingCell(element.querySelector(".upgrade"), element.id);
     fillingCell(element.querySelector(".profit"), element.id);
@@ -230,6 +252,26 @@ const fillingTable = () => {
   });
   values.saveRefreshKey(setInterval(actualAmountDisplay, 1000));
 };
+const enableButtons = (buttonsActivation) => {
+  buttonsActivation.forEach((button) => {
+    button.disabled = false;
+  });
+};
+const disableButtons = (buttonsActivation) => {
+  buttonsActivation.forEach((button) => {
+    button.disabled = true;
+  });
+};
+const switchToResetBtn = () => {
+  startGame.style.display = "none";
+  endGame.style.display = "flex";
+};
+const switchToStartBtn = () => {
+  startGame.style.display = "flex";
+  endGame.style.display = "none";
+};
+const timeDisplay = () => (timmer.textContent = values.decreaseSeconds());
+const noTimeDisplay = () => (timmer.textContent = values.getSeconds());
 // funções externas
 function increase(element) {
   const tableLine = element.parentNode.parentNode;
@@ -244,9 +286,6 @@ function increase(element) {
     actualAmountElement.style.color = "#dc143c";
   }
 }
-
-const timeDisplay = () => (timmer.textContent = values.decreaseSeconds());
-const noTimeDisplay = () => (timmer.textContent = values.getSeconds());
 startGame.addEventListener("submit", (e) => {
   e.preventDefault();
   if (document.getElementById("timeAmount").value > 0) {
@@ -256,14 +295,12 @@ startGame.addEventListener("submit", (e) => {
     values.saveTimeKey(setInterval(noTimeDisplay, 100));
   }
   fillingTable();
-  startGame.style.display = "none";
-  endGame.style.display = "flex";
+  switchToResetBtn();
 });
 endGame.addEventListener("submit", (e) => {
   e.preventDefault();
-  let answer = prompt(`Deseja reiniciar ?\ns ou n`);
-  if (answer == "s" || answer == "S" || answer == "sim" || answer == "Sim" || answer == "SIM") {
-    console.log(answer);
-    location.reload();
-  }
+  disableButtons(document.querySelectorAll("button.invest"));
+  switchToStartBtn();
+  state.reset();
+  values.reset();
 });
