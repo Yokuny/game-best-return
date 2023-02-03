@@ -120,7 +120,7 @@ table > tbody > tr {
 /*  */
 ul {
   box-sizing: border-box;
-  padding-left: 17px;
+  padding-left: 5vw;
   margin-top: 2vh;
 }
 ul li {
@@ -131,5 +131,10 @@ ul li {
 @media (min-width: 700px) {
   body {
     padding-left: 60px;
+  }
+  ul {
+    box-sizing: border-box;
+    padding-left: 1vw;
+    margin-top: 2vh;
   }
 }
